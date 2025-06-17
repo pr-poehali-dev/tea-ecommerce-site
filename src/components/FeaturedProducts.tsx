@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/contexts/CartContext";
 
 const products = [
   {
@@ -36,6 +37,20 @@ const products = [
 ];
 
 const FeaturedProducts = () => {
+  const { dispatch } = useCart();
+
+  const handleAddToCart = (product: (typeof products)[0]) => {
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+      },
+    });
+  };
+
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,6 +97,7 @@ const FeaturedProducts = () => {
                     <Button
                       size="sm"
                       className="bg-emerald-600 hover:bg-emerald-700"
+                      onClick={() => handleAddToCart(product)}
                     >
                       В корзину
                     </Button>

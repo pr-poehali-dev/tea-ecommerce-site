@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
+import { useCart } from "@/contexts/CartContext";
 
 const Header = () => {
+  const { state } = useCart();
+  const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,9 +55,11 @@ const Header = () => {
             </button>
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors relative">
               <Icon name="ShoppingCart" size={20} />
-              <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                2
-              </span>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
